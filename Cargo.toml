@@ -1,0 +1,38 @@
+[package]
+name = "thehome-mqtt"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "MQTT med Home Assistant MQTT discovery som ekstern integration til TheHome"
+publish = false
+
+[[bin]]
+name = "mqtt_ext"
+path = "src/main.rs"
+
+[dependencies]
+thehome-plugin = { git = "https://github.com/magnusdunker/thehome-example-integration-rust", rev = "a8f05c1859f6689b2a31d2188593eb872408385e" }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "sync", "net"] }
+tokio-util = "0.7"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+parking_lot = "0.12"
+rand = "0.8"
+thiserror = "2"
+rumqttc = { version = "0.24", default-features = false, features = ["use-rustls", "websocket"] }
+rumqttd = { version = "0.19", default-features = false }
+minijinja = { version = "2", features = ["json"] }
+webpki-roots = "0.26"
+rustls-pemfile = "2"
+
+[dev-dependencies]
+tempfile = "3"
+rcgen = "0.13"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "sync", "net", "io-util"] }
+
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true
+codegen-units = 1

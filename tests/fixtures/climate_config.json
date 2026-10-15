@@ -1,0 +1,1 @@
+{"name":"Termostat","uniq_id":"clim1","mode_cmd_t":"trv/mode/set","mode_stat_t":"trv/state","mode_stat_tpl":"{{ value_json.mode }}","temp_cmd_t":"trv/temp/set","temp_stat_t":"trv/state","temp_stat_tpl":"{{ value_json.target }}","curr_temp_t":"trv/state","curr_temp_tpl":"{{ value_json.current }}","modes":["off","heat"],"min_temp":5,"max_temp":30,"temp_step":0.5}

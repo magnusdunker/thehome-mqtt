@@ -1,0 +1,1 @@
+{"name":"Relay","~":"tasmota_ABC123/","stat_t":"~stat/POWER1","cmd_t":"~cmnd/POWER1","avty_t":"~tele/LWT","pl_avail":"Online","pl_not_avail":"Offline","pl_on":"ON","pl_off":"OFF","uniq_id":"ABC123_RL_1","dev":{"cns":[["mac","AA:BB:CC:DD:EE:FF"]],"name":"Tasmota stik","mdl":"Sonoff Basic","sw":"13.0.0","mf":"Tasmota"}}

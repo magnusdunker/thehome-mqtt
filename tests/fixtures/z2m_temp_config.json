@@ -1,0 +1,14 @@
+{
+  "availability": [{"topic": "zigbee2mqtt/bridge/state", "value_template": "{{ value_json.state }}"}],
+  "device": {"identifiers": ["zigbee2mqtt_0x00158d0001a2b3c4"], "manufacturer": "Aqara", "model": "WSDCGQ11LM", "name": "Bad sensor"},
+  "device_class": "temperature",
+  "enabled_by_default": true,
+  "object_id": "bad_sensor_temperature",
+  "state_class": "measurement",
+  "state_topic": "zigbee2mqtt/Bad sensor",
+  "unique_id": "0x00158d0001a2b3c4_temperature_zigbee2mqtt",
+  "unit_of_measurement": "°C",
+  "value_template": "{{ value_json.temperature }}",
+  "json_attributes_topic": "zigbee2mqtt/Bad sensor",
+  "name": "Temperature"
+}

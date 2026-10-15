@@ -1,0 +1,82 @@
+# Bygger en binær pr. platform, når et tag som v1.2.3 pushes, og lægger dem
+# sammen med thehome.json på en GitHub-release. TheHome installerer derfra.
+# Har releasen ingen tekst, skrives den ud fra commits siden sidste tag.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  # navnet på binæren fra Cargo.toml og domænet fra thehome.json
+  BIN: mqtt_ext
+  DOMAIN: mqtt_ext
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: windows-latest, target: x86_64-pc-windows-msvc, ext: .exe }
+          - { os: ubuntu-latest, target: x86_64-unknown-linux-musl, ext: "" }
+          - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-musl, ext: "" }
+          - { os: macos-latest, target: aarch64-apple-darwin, ext: "" }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - if: contains(matrix.target, 'musl')
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+      - run: cargo build --release --locked --target ${{ matrix.target }}
+      - shell: bash
+        run: |
+          mkdir dist
+          cp "target/${{ matrix.target }}/release/$BIN${{ matrix.ext }}" "dist/$DOMAIN-${{ matrix.target }}${{ matrix.ext }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: dist/*
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Release notes from the commits since the previous tag
+        run: |
+          prev=$(git describe --tags --abbrev=0 --match 'v*' "$GITHUB_REF_NAME^" 2>/dev/null || true)
+          range="$GITHUB_REF_NAME"
+          [ -n "$prev" ] && range="$prev..$GITHUB_REF_NAME"
+          {
+            if [ -n "$prev" ]; then echo "Ændringer siden $prev:"; else echo "Første udgave."; fi
+            echo
+            git log --no-merges --format='- %s' "$range"
+          } > notes.md
+          cat notes.md
+      # A release published on github.com already exists; then only add the
+      # files, and the notes if it has none.
+      - run: |
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dist/* thehome.json --clobber
+            if [ -z "$(gh release view "$GITHUB_REF_NAME" --json body --jq .body)" ]; then
+              gh release edit "$GITHUB_REF_NAME" --notes-file notes.md
+            fi
+          else
+            gh release create "$GITHUB_REF_NAME" dist/* thehome.json --title "$GITHUB_REF_NAME" --notes-file notes.md
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}

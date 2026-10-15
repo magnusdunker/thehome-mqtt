@@ -1,0 +1,26 @@
+{
+  "availability": [{"topic": "zigbee2mqtt/bridge/state", "value_template": "{{ value_json.state }}"}, {"topic": "zigbee2mqtt/Stue lampe/availability", "value_template": "{{ value_json.state }}"}],
+  "availability_mode": "all",
+  "brightness": true,
+  "brightness_scale": 254,
+  "command_topic": "zigbee2mqtt/Stue lampe/set",
+  "device": {
+    "identifiers": ["zigbee2mqtt_0x000b57fffec6a5b2"],
+    "manufacturer": "IKEA",
+    "model": "TRADFRI LED bulb E27 1000 lumen, dimmable, white spectrum",
+    "name": "Stue lampe",
+    "sw_version": "2.3.093",
+    "via_device": "zigbee2mqtt_bridge_0x00124b0022ef1234"
+  },
+  "effect": true,
+  "effect_list": ["blink", "breathe", "okay"],
+  "max_mireds": 454,
+  "min_mireds": 250,
+  "name": null,
+  "object_id": "stue_lampe",
+  "origin": {"name": "Zigbee2MQTT", "sw": "1.40.0"},
+  "schema": "json",
+  "state_topic": "zigbee2mqtt/Stue lampe",
+  "supported_color_modes": ["color_temp"],
+  "unique_id": "0x000b57fffec6a5b2_light_zigbee2mqtt"
+}

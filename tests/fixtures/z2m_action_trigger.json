@@ -1,0 +1,8 @@
+{
+  "automation_type": "trigger",
+  "device": {"identifiers": ["zigbee2mqtt_0x00158d00045e6f70"], "name": "Kontakt"},
+  "payload": "single",
+  "subtype": "single",
+  "topic": "zigbee2mqtt/Kontakt/action",
+  "type": "action"
+}

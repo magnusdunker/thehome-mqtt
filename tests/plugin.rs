@@ -213,7 +213,7 @@ async fn plugin_end_to_end() {
 
     // --- set up
     let peer = Peer::connect(port, &["homeassistant/status", "test/#", "trv/#"]).await;
-    let entry = json!({ "entry_id": "e1", "domain": "mqtt_ext", "data": data, "options": { "subscriptions": ["garage/#"] } });
+    let entry = json!({ "entry_id": "e1", "domain": "mqtt", "data": data, "options": { "subscriptions": ["garage/#"] } });
     host.call("setup_entry", json!({ "entry": entry })).await.unwrap();
     assert_eq!(peer.expect("homeassistant/status").await, "online");
     {
@@ -247,7 +247,7 @@ async fn plugin_end_to_end() {
     {
         let rec = host.rec.lock().unwrap();
         let (_, d) = rec.devices.iter().find(|(_, d)| d["name"] == "Testenhed").unwrap();
-        assert_eq!(d["identifiers"], json!([["mqtt_ext", "testdev"]]));
+        assert_eq!(d["identifiers"], json!([["mqtt", "testdev"]]));
         assert_eq!(d["manufacturer"], "Acme");
     }
 
@@ -327,7 +327,7 @@ fn support_fixture(name: &str) -> String {
 #[tokio::test]
 async fn options_flow_checks_topics() {
     let host = FakeHost::start(MqttIntegration::default());
-    let entry = json!({ "entry_id": "e1", "domain": "mqtt_ext", "data": {}, "options": {} });
+    let entry = json!({ "entry_id": "e1", "domain": "mqtt", "data": {}, "options": {} });
     let call = |input: Value| {
         host.call("options_flow", json!({ "flow": { "flow_id": "o", "source": "options", "entry": entry }, "step": "init", "input": input }))
     };

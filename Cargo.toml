@@ -1,13 +1,13 @@
 [package]
 name = "thehome-mqtt"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 license = "MIT"
 description = "MQTT med Home Assistant MQTT discovery som ekstern integration til TheHome"
 publish = false
 
 [[bin]]
-name = "mqtt_ext"
+name = "mqtt"
 path = "src/main.rs"
 
 [dependencies]

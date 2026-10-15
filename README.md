@@ -41,7 +41,7 @@ Efter opsætningen kan du under integrationens indstillinger slå discovery til 
 
 Discovery opretter enheder og entities af typerne sensor, binary_sensor, switch, light (også JSON- og template-skema), climate, cover, fan, lock, number, select, button, text, siren, valve, update, event og scene, samt enhedstriggere (device_automation), med tilgængelighed, `expire_after`, `off_delay`, skabeloner og JSON-attributter som i Home Assistant. Discovery pr. enhed (`<præfiks>/device/.../config`) virker også.
 
-Tjenester under domænet `mqtt_ext`:
+Tjenester under domænet `mqtt`:
 
 | Tjeneste | |
 |---|---|
@@ -53,14 +53,13 @@ Tjenester under domænet `mqtt_ext`:
 | `zigbee2mqtt_permit_join` | tillad nye Zigbee-enheder |
 | `zigbee2mqtt_rename_device`, `zigbee2mqtt_remove_device` | omdøb eller fjern en Zigbee2MQTT-enhed |
 
-## Forholdet til den indbyggede integration
+## Forskelle fra Home Assistant og den tidligere indbyggede integration
 
-TheHome har også MQTT indbygget (`mqtt`). Den eksterne integration har sit eget domæne, `mqtt_ext`, og sine egne enheds-id'er, så de to kan være installeret samtidig uden at blande enhederne sammen. Bruger de samme broker og samme discovery-præfiks, får du hver enhed to gange, så brug kun den ene ad gangen. Koden er porteret fra den indbyggede, men nogle ting kan en ekstern integration ikke:
+TheHome havde MQTT indbygget til og med version 0.2.0. Den er fjernet, og denne integration har overtaget domænet `mqtt`. Koden er porteret derfra, men nogle ting kan en ekstern integration ikke endnu:
 
 - Når en enhed fjerner sig selv med en tom discovery-besked, bliver dens entities utilgængelige i stedet for at blive slettet. Du kan slette dem i TheHome.
-- Automationer med en MQTT-trigger får ikke selv integrationen til at abonnere på deres topic. Tilføj topic'et under **Abonnér på topics** i integrationens indstillinger.
-- Knappen **Slå til i Zigbee2MQTT** under Reparationer virker kun med den indbyggede. Brug tjenesten `mqtt_ext.zigbee2mqtt_enable_discovery` i stedet.
-- Andre indbyggede integrationer, der finder deres enheder via MQTT, bruger kun den indbyggede MQTT.
+- Automationer med en MQTT-trigger beder integrationen abonnere på deres topic, når den starter. Faste abonnementer, som ikke hører til en automation, sættes under **Abonnér på topics** i integrationens indstillinger.
+- Indbyggede integrationer, der finder deres enheder via MQTT-discovery, får ikke besked fra denne integration.
 
 ## Udvikling
 

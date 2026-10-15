@@ -13,8 +13,8 @@ permissions:
 
 env:
   # navnet på binæren fra Cargo.toml og domænet fra thehome.json
-  BIN: mqtt_ext
-  DOMAIN: mqtt_ext
+  BIN: mqtt
+  DOMAIN: mqtt
 
 jobs:
   build:

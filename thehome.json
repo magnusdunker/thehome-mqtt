@@ -1,5 +1,5 @@
 {
-  "domain": "mqtt_ext",
+  "domain": "mqtt",
   "name": "MQTT",
   "plugin_api": 1,
   "config_flow": true,

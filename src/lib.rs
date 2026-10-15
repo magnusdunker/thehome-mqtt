@@ -26,9 +26,8 @@ use tokio_util::sync::CancellationToken;
 
 pub use manager::{Mqtt, Settings, Transport};
 
-pub const DOMAIN: &str = "mqtt_ext";
-/// The domain in device identifiers. Not `mqtt`, so devices stay apart
-/// from the built-in integration's if both run.
+pub const DOMAIN: &str = "mqtt";
+/// The domain in device identifiers.
 pub const ID_DOMAIN: &str = DOMAIN;
 
 /// Logging to TheHome's log through stderr.

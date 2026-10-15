@@ -98,7 +98,7 @@ pub fn problem(b: &Bridge, discovery_on: bool, prefix: &str) -> Option<(String, 
             format!(
                 "Zigbee2MQTT på «{base}» har Home Assistant-integrationen slået fra, så dens enheder ikke \
                  bliver oprettet her. Slå den til i Zigbee2MQTT under Indstillinger > Home Assistant-integration \
-                 og genstart Zigbee2MQTT, eller kør tjenesten mqtt.zigbee2mqtt_enable_discovery under \
+                 og genstart Zigbee2MQTT, eller kør tjenesten mqtt_ext.zigbee2mqtt_enable_discovery under \
                  Udviklerværktøjer > Tjenester, så gør TheHome det for dig."
             ),
         )),
@@ -107,7 +107,7 @@ pub fn problem(b: &Bridge, discovery_on: bool, prefix: &str) -> Option<(String, 
             format!(
                 "Zigbee2MQTT på «{base}» sender sine enheder til «{p}», men TheHome lytter på «{prefix}». \
                  Ret discovery-præfikset i MQTT-integrationens indstillinger til «{p}», eller kør tjenesten \
-                 mqtt.zigbee2mqtt_enable_discovery under Udviklerværktøjer > Tjenester."
+                 mqtt_ext.zigbee2mqtt_enable_discovery under Udviklerværktøjer > Tjenester."
             ),
         )),
         _ => None,

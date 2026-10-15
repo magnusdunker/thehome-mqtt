@@ -240,7 +240,7 @@ impl HubApi for FakeHub {
         let entity_id = existing.unwrap_or_else(|| {
             let object_id = spec.suggested_object_id.clone().unwrap_or_else(|| {
                 let parts: Vec<String> = [device.as_ref().map(|d| d.spec.name.clone()), spec.name.clone()].into_iter().flatten().collect();
-                if parts.is_empty() { format!("mqtt_{uid}") } else { parts.join(" ") }
+                if parts.is_empty() { format!("mqtt_ext_{uid}") } else { parts.join(" ") }
             });
             let base = format!("{}.{}", spec.domain, slugify(&object_id));
             let mut candidate = base.clone();

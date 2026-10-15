@@ -1,5 +1,7 @@
 # MQTT til TheHome
 
+> **Udgået.** TheHome bruger sin indbyggede MQTT-integration, som kan forbinde til flere brokere, også HiveMQ Cloud. Dette repo opdateres ikke længere.
+
 En ekstern integration til [TheHome](https://github.com/magnusdunker/thehome), der forbinder til en MQTT-broker og opretter enheder ud fra Home Assistants MQTT discovery. Zigbee2MQTT, Z-Wave JS UI, Tasmota, ESPHome (MQTT), Frigate og OpenMQTTGateway dukker derfor op af sig selv.
 
 ## Installation
